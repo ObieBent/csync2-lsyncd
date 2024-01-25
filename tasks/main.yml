@@ -12,7 +12,7 @@
       paths: '../vars'
   tags: always
 
-- include: "{{ ansible_os_family }}.yml"
+- include_tasks: "{{ ansible_os_family }}.yml"
 
 - name: main | Install csync2 package
   package:
@@ -58,10 +58,10 @@
     mode:    0750
     recurse: yes
 
-- include: generate_keys.yml
+- include_tasks: generate_keys.yml
 
 - name: main | Deploy csync2 config per group
-  include: "csync2_cfg.yml csync2_group=[{{ item }}]"
+  include_tasks: "csync2_cfg.yml csync2_group=[{{ item }}]"
   with_items:
     - "{{ csync2_groups }}"
   when: csync2_config_per_group == true
